@@ -3,11 +3,16 @@ function validerExpression(expression) {
     return regex.test(expression);
   }
 
-function calculer() {
+  function calculer() {
     const inputCalc = document.getElementById('inputCalc');
     const resultat = document.getElementById('resultat');
   
     const expression = inputCalc.value;
+  
+    if (!parenthesesEquilibrees(expression)) {
+      resultat.textContent = "Erreur : Les parenthèses ne sont pas équilibrées.";
+      return;
+    }
   
     if (!validerExpression(expression)) {
       resultat.textContent = "Erreur : L'expression contient des caractères non-autorisés.";
@@ -22,13 +27,22 @@ function calculer() {
     }
   }
   
+  
 
   function evaluerExpression(expression) {
-    const expr = expression.replace(/\s+/g, ''); // Supprimer les espaces
-    const exprAvecMultiplications = expr.replace(/(\d)\(/g, '$1*('); // debug des multiplications
-    const tokens = exprAvecMultiplications.split(/([\+\-\*/\^\(\)])/).filter(t => t.length > 0);
+    const expr = expression.replace(/\s+/g, '');
+    const exprAvecMultiplications = expr.replace(/(\d)\(/g, '$1*('); 
+    const exprAvecMultiplicationsEtNegatifs = exprAvecMultiplications.replace(/\((-\d)/g, '(0$1');
+    const tokens = exprAvecMultiplicationsEtNegatifs.split(/([\+\-\*/\^\(\)])/).filter(t => t.length > 0);
     return evaluerTokens(tokens);
 }
+
+function parenthesesEquilibrees(expression) {
+    const parenthesesOuvrantes = (expression.match(/\(/g) || []).length;
+    const parenthesesFermantes = (expression.match(/\)/g) || []).length;
+    return parenthesesOuvrantes === parenthesesFermantes;
+  }
+  
 
 function evaluerTokens(tokens) {
     const ops = {
