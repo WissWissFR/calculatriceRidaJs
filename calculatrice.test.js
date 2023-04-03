@@ -24,3 +24,15 @@ describe('evaluerExpression', () => {
     expect(() => evaluerExpression(expression)).toThrow();
   });
 });
+
+describe('parenthesesEquilibrees', () => {
+    test('Doit retourner true pour une expression avec des parenthèses équilibrées', () => {
+      const expression = '(3*2)+(4-2)';
+      expect(parenthesesEquilibrees(expression)).toBe(true);
+    });
+  
+    test('Doit retourner false pour une expression avec des parenthèses non équilibrées', () => {
+      const expression = '(3*2)+(4-2))))';
+      expect(parenthesesEquilibrees(expression)).toBe(false);
+    });
+  });
