@@ -31,8 +31,9 @@ function validerExpression(expression) {
 
   function evaluerExpression(expression) {
     const expr = expression.replace(/\s+/g, '');
-    const exprAvecMultiplications = expr.replace(/(\d)\(/g, '$1*('); 
-    const exprAvecMultiplicationsEtNegatifs = exprAvecMultiplications.replace(/\((-\d)/g, '(0$1');
+    const exprAvecMultiplications = expr.replace(/(\d)\(/g, '$1*(');
+    const exprAvecParentheses = exprAvecMultiplications.replace(/\)\(/g, ')*(');
+    const exprAvecMultiplicationsEtNegatifs = exprAvecParentheses.replace(/\((-\d)/g, '(0$1');
     const tokens = exprAvecMultiplicationsEtNegatifs.split(/([\+\-\*/\^\(\)])/).filter(t => t.length > 0);
     return evaluerTokens(tokens);
 }
