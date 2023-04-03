@@ -1,4 +1,3 @@
-// calculatrice.test.js
 const { validerExpression, evaluerExpression } = require('./calculatrice');
 
 describe('validerExpression', () => {
