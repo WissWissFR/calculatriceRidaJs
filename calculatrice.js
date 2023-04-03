@@ -23,9 +23,10 @@ function calculer() {
   }
   
 
-function evaluerExpression(expression) {
+  function evaluerExpression(expression) {
     const expr = expression.replace(/\s+/g, ''); // Supprimer les espaces
-    const tokens = expr.split(/([\+\-\*/\^\(\)])/).filter(t => t.length > 0);
+    const exprAvecMultiplications = expr.replace(/(\d)\(/g, '$1*('); // debug des multiplications
+    const tokens = exprAvecMultiplications.split(/([\+\-\*/\^\(\)])/).filter(t => t.length > 0);
     return evaluerTokens(tokens);
 }
 
